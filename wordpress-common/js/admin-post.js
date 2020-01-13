@@ -6,7 +6,7 @@
         this.$wpSortable = $('.meta-box-sortables');
 
         this.$wpSortable.on('sortstart', function(event, ui) {
-            if ( ! this.$sortables.find( '.postbox' ).length ) {
+            if ( ! that.$sortables.find( '.postbox' ).length ) {
                 that.$sortables.append(that.$placeholder);
             }
         }).on('sortstop', function( event, ui ) {
