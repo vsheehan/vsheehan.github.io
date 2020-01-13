@@ -11,7 +11,8 @@
                 that.$sortables.css({ 'min-height': '100px', background: 'transparent', border: '1px dashed #b4b9be', });
             }
         }).on('sortstop', function( event, ui ) {
-            that.$sortables.css({ 'min-height': '', background: '', border: '', });
+            setTimeout(function() { that.$sortables.css({ 'min-height': '', background: '', border: '', }); }, 200)
+
         });
 
     }
