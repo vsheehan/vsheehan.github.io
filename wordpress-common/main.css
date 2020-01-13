@@ -1,0 +1,16 @@
+body.wp-admin.post-php #postbox-container-10 .postbox:first-of-type,
+body.wp-admin.post-new-php #postbox-container-10 .postbox:first-of-type {
+  margin-top: 20px;
+}
+body.wp-admin.post-php #postbox-container-10 .postbox:last-of-type,
+body.wp-admin.post-new-php #postbox-container-10 .postbox:last-of-type {
+  margin-bottom: 0;
+}
+body.wp-admin.post-php #postbox-container-10:after,
+body.wp-admin.post-new-php #postbox-container-10:after {
+  content: ' ';
+  width: 0;
+  height: 0;
+  clear: both;
+}
+/*# sourceMappingURL=main.css.map */

@@ -1,0 +1,22 @@
+body.wp-admin {
+  &.post-php,
+  &.post-new-php {
+    #postbox-container-10 {
+      .postbox {
+        &:first-of-type {
+          margin-top: 20px;
+        }
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+
+      &:after {
+        content: ' ';
+        width: 0;
+        height: 0;
+        clear: both;
+      }
+    }
+  }
+}
