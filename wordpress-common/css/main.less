@@ -11,12 +11,16 @@ body.wp-admin {
         }
       }
 
-      &:after {
-        content: ' ';
-        width: 0;
-        height: 0;
-        clear: both;
+      #after-title-sortables {
+        margin-top: -1.4em;
+        &.empty {
+          display: block;
+        }
+        &.sorting {
+          margin-top: 0;
+        }
       }
+
     }
   }
 }

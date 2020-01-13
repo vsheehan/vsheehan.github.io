@@ -2,17 +2,21 @@
     function afterTitleMetaPlaceholder() {
         let that = this;
         this.$sortables = $('#after-title-sortables');
-        this.$placeholder =$('<div>', { class: 'postbox' }).css({ height: '100px', background: 'transparent', border: '1px dashed #b4b9be', });
+        this.$placeholder = $('<span>', { class: 'after-title-helper' }).html('&nbsp;');
         this.$wpSortable = $('.meta-box-sortables');
 
+        this.$sortables.prepend( this.$placeholder );
         this.$wpSortable.on('sortstart', function(event, ui) {
-            if ( ! that.$sortables.find( '.postbox' ).length ) {
-                //that.$sortables.append(that.$placeholder);
-                that.$sortables.css({ 'min-height': '100px', background: 'transparent', border: '1px dashed #b4b9be', });
-            }
-        }).on('sortstop', function( event, ui ) {
-            setTimeout(function() { that.$sortables.css({ 'min-height': '', background: '', border: '', }); }, 200)
+            console.log( 'start' );
+            that.$sortables.toggleClass( 'sorting', true );
 
+        }).on('sortstop', function( event, ui ) {
+            that.$sortables.toggleClass( 'sorting', false );
+            if ( ! that.$sortables.find( '.postbox:visible' ).length ) {
+                that.$sortables.toggleClass( 'empty', true );
+            } else {
+                that.$sortables.toggleClass('empty', false);
+            }
         });
 
     }

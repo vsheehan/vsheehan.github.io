@@ -6,11 +6,16 @@ body.wp-admin.post-php #postbox-container-10 .postbox:last-of-type,
 body.wp-admin.post-new-php #postbox-container-10 .postbox:last-of-type {
   margin-bottom: 0;
 }
-body.wp-admin.post-php #postbox-container-10:after,
-body.wp-admin.post-new-php #postbox-container-10:after {
-  content: ' ';
-  width: 0;
-  height: 0;
-  clear: both;
+body.wp-admin.post-php #postbox-container-10 #after-title-sortables,
+body.wp-admin.post-new-php #postbox-container-10 #after-title-sortables {
+  margin-top: -1.4em;
+}
+body.wp-admin.post-php #postbox-container-10 #after-title-sortables.empty,
+body.wp-admin.post-new-php #postbox-container-10 #after-title-sortables.empty {
+  display: block;
+}
+body.wp-admin.post-php #postbox-container-10 #after-title-sortables.sorting,
+body.wp-admin.post-new-php #postbox-container-10 #after-title-sortables.sorting {
+  margin-top: 0;
 }
 /*# sourceMappingURL=main.css.map */
