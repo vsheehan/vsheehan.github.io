@@ -1,0 +1,93 @@
+#debug-console-wrap {
+  border: 1px solid gray;
+  padding: 5px;
+  border-radius: 3px;
+  width: 100%;
+}
+#debug-console-wrap,
+#debug-console-wrap * {
+  box-sizing: border-box;
+}
+#debug-console-wrap,
+#debug-console-wrap ul {
+  list-style: none;
+}
+#debug-console-wrap h3 {
+  margin: 3px 0;
+}
+#debug-console-wrap #debug-console-output {
+  padding: 5px;
+  border-radius: 3px;
+  width: 100%;
+  height: 200px;
+  background: white;
+  border: 1px solid black;
+  overflow-y: auto;
+  overflow-x: auto;
+  text-overflow: ellipsis;
+}
+#debug-console-wrap #debug-console-output > li.debug-item.single:before {
+  content: '\2022';
+  margin-right: 3px;
+}
+#debug-console-wrap #debug-console-output li.debug-item.warning {
+  color: orange;
+}
+#debug-console-wrap #debug-console-output li.debug-item.error {
+  color: red;
+}
+#debug-console-wrap #debug-console-output li.debug-item.information {
+  color: darkgreen;
+}
+#debug-console-wrap #debug-console-output li.debug-item:before {
+  margin-right: 3px;
+}
+#debug-console-wrap #debug-console-output li.debug-item.multi:not(.open):before {
+  content: '\25B8';
+  cursor: pointer;
+}
+#debug-console-wrap #debug-console-output li.debug-item.multi:not(.open),
+#debug-console-wrap #debug-console-output li.debug-item.multi:not(.open) li,
+#debug-console-wrap #debug-console-output li.debug-item.multi:not(.open) ul {
+  display: inline-block;
+  padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#debug-console-wrap #debug-console-output li.debug-item.multi:not(.open) li:after {
+  content: ',';
+  margin: 0 3px 0 0;
+}
+#debug-console-wrap #debug-console-output li.debug-item.multi:not(.open) li:first-of-type:before {
+  content: '{';
+  margin: 0 3px;
+}
+#debug-console-wrap #debug-console-output li.debug-item.multi:not(.open) li:last-of-type:after {
+  content: '}';
+  margin: 0 0 0 3px;
+}
+#debug-console-wrap #debug-console-output li.debug-item.multi.open {
+  backgrround: blue;
+}
+#debug-console-wrap #debug-console-output li.debug-item.multi.open .debug-item.single:before {
+  content: '\2022';
+  margin-right: 3px;
+}
+#debug-console-wrap #debug-console-output li.debug-item.multi.open:before {
+  content: '\25BE';
+  cursor: pointer;
+}
+#debug-console-wrap #debug-console-input-wrap {
+  margin-top: 5px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+#debug-console-wrap #debug-console-input-wrap #debug-console-input {
+  flex: 1;
+}
+#debug-console-wrap #debug-console-input-wrap input[type=button] {
+  width: 100px;
+  margin-left: 5px;
+}
