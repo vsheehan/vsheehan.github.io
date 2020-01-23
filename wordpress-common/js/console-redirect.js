@@ -75,11 +75,17 @@ var consoleRedirect = function() {
         that.wrap.appendChild( inputWrap );
         
     
+        let body = document.querySelectorAll(".some-element:last-child");
+        if ( ! body.length ) {
+            body = document.body;
+        }
+    
+    
         if ( document.readyState === "complete" || (document.readyState !== "loading" && !document.documentElement.doScroll ) ) {
-          document.body.appendChild(that.wrap);
+          body.appendChild(that.wrap);
         } else {
           document.addEventListener("DOMContentLoaded", function() {
-              document.body.appendChild(that.wrap);
+              body.appendChild(that.wrap);
           });
         }
     }
