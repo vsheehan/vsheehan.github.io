@@ -497,6 +497,12 @@ window.developerRedirect.vsQuery = (function () {
 
     dev.instances.console = dev.console();
 
+    window.onerror = function(msg, url, linenumber) {
+        console.error( { message: msg, line: linenumber, url: url,  } );
+        //alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
+        return true;
+    }
+
 
     dev.sources = function() {
         let that = this;
@@ -581,16 +587,22 @@ window.developerRedirect.vsQuery = (function () {
     dev.pageSource = function() {
         let that = this;
         
+        
+        
         this.initialize = function() {
             that.pageSource = vs( '<div>', { id: 'developer-redirect-page-source' } );
             that.htmlWrap   = vs('<pre>').appendTo(that.pageSource);
+            that.refreshButton = vs( '<input>', { type: 'button', id: 'developer-redirect-page-source-button' } )
+                .click(this.render)
+                .appendTo(that.pageSource);
+            
+            
             dev.instances.tabs.addTab( 'Page Source', that.pageSource )
             vs().docReady(that.render);
             
         }
         
         this.render = function() {
-            
             let html = vs('html').elems[0].outerHTML;
             that.htmlWrap.text(html);
             
@@ -608,227 +620,5 @@ window.developerRedirect.vsQuery = (function () {
     //dev.instances.tabs.addTab('Test', vs('<div>', { id:'test' }).text('test'));
 
 })( window.developerRedirect, window.developerRedirect.vsQuery );
-
-
-
-/*
-
-
-
-window.developerRedirect.console = function() {
-    var that = this;
-
-
-    this.wrap;
-    this.inputField;
-    this.inputButton;
-    this.clearButton;
-    this.output;
-    this.openChildren;
-
-    this.oldConole = window.console.log;
-
-    this.multiClick = function(e) {
-        if ( e.target !== this ) return;
-
-        this.classList.toggle('open');
-        that.openChildren = this.getElementsByClassName('open');
-
-        that.removeClass();
-    }
-
-    this.removeClass = function() {
-        that.openChildren[0].classList.remove('open');
-        if ( that.openChildren[0] ) {
-            that.removeClass();
-        }
-    }
-
-    this.clearClick = function(e) {
-        while (that.output.firstChild) that.output.removeChild(that.output.firstChild);
-    }
-
-    this.submitClick = function(e) {
-        let cmd = that.inputField.value;
-        console.log( eval( cmd ) );
-        that.inputField.value = '';
-    }
-
-    this.enterPressed = function(event) {
-        if (event.which == 13 || event.keyCode == 13) {
-            that.submitClick(null);
-            return false;
-        }
-        return true;
-    }
-
-    this.appendWrap = function() {
-        //alert(document.querySelectorAll(".wrap").length);
-        let body = document.querySelectorAll(".wrap");
-        //alert(body.length);
-        if ( body.length < 1) {
-            document.body.appendChild( that.wrap );
-        } else {
-            body[ body.length -1 ].appendChild(that.wrap);
-        }
-
-    }
-
-
-
-    //Creates the debug console and appends it to the page.
-    this.initialize = function() {
-        that.output = document.createElement( 'ul' );
-        that.output.setAttribute('id', 'debug-console-output' );
-
-        that.inputField = document.createElement( 'input' );
-        that.inputField.setAttribute('id', 'debug-console-input' );
-        that.inputField.setAttribute('type', 'text');
-        that.inputField.onkeypress = that.enterPressed;
-
-        that.inputButton = document.createElement( 'input' );
-        that.inputButton.setAttribute('id', 'debug-console-input-button' );
-        that.inputButton.setAttribute('type', 'button');
-        that.inputButton.setAttribute('value', 'Submit');
-        that.inputButton.onclick = that.submitClick;
-
-        that.clearButton = document.createElement( 'input' );
-        that.clearButton.setAttribute('id', 'debug-console-clear-button' );
-        that.clearButton.setAttribute('type', 'button');
-        that.clearButton.setAttribute('value', 'Clear Console');
-        that.clearButton.onclick = that.clearClick;
-
-
-        let inputWrap = document.createElement( 'div' );
-        inputWrap.setAttribute('id', 'debug-console-input-wrap' );
-        inputWrap.appendChild( that.inputField );
-        inputWrap.appendChild( that.inputButton );
-        inputWrap.appendChild( that.clearButton );
-
-        let header = document.createElement( 'h3' );
-        header.innerText = "Debug Console";
-
-        that.wrap = document.createElement( 'div' );
-        that.wrap.setAttribute('id', 'debug-console-wrap' );
-        that.wrap.appendChild( header );
-        that.wrap.appendChild( that.output );
-        that.wrap.appendChild( inputWrap );
-
-
-
-        //window.developerRedirect.instances.tabs.addTab('Console', that.wrap);
-
-
-
-
-
-        if ( document.readyState === "complete" || (document.readyState !== "loading" && !document.documentElement.doScroll ) ) {
-            that.appendWrap();
-        } else {
-            document.addEventListener("DOMContentLoaded", function() {
-                that.appendWrap();
-            });
-        }
-    }
-
-
-
-    this.getObjString = function( obj ) {
-        this.oldConole(typeof(obj));
-        if ( typeof( obj ) === 'undefined' ) {
-            return 'undefined';
-        } else if ( typeof(obj) === 'function' )  {
-            return 'function()';
-        } else {
-
-            return obj.toString().replace(/(\r\n|\n|\r)/gm," ");
-        }
-    }
-
-
-    this.printObject = function(obj, container, type = false, firstLevel = false) {
-        for (var key in obj) {
-            let itemWrap = document.createElement( 'li' );
-            itemWrap.className = 'debug-item';
-            if ( type ) {
-                itemWrap.className += ' ' + type;
-            }
-
-            if ( typeof( obj[key] ) !== 'object') {
-                let str = this.getObjString( obj[key] );
-                if ( firstLevel ) {
-                    itemWrap.innerText = str;
-                } else {
-                    itemWrap.innerText = key + ': ' + str;
-                }
-                itemWrap.className += ' single';
-            } else {
-                if ( ! firstLevel ) {
-                    itemWrap.innerText = key;
-                }
-
-                itemWrap.className += ' multi';
-                itemWrap.onclick = that.multiClick;
-                let subContainer = document.createElement( 'ul' );
-                itemWrap.appendChild( subContainer );
-                that.printObject( obj[key], subContainer );
-            }
-            container.appendChild( itemWrap );
-        }
-
-        return container;
-    }
-
-    this.appendOutput = function( attributes, type = 'information' ) {
-        that.oldConole.apply(console, attributes);
-        that.printObject( attributes, that.output, type, true );
-    }
-
-
-    window.console.log = function() {
-        that.appendOutput( arguments, false );
-    }
-
-    window.console.info = function() {
-        that.appendOutput( arguments, 'information' );
-    }
-
-    window.console.warn = function() {
-        that.appendOutput( arguments, 'warning' );
-    }
-
-    window.console.error = function() {
-        that.appendOutput( arguments, 'error' );
-    }
-
-
-
-
-    this.initialize();
-
-    return this;
-}
-
-
-
-
-window.developerRedirect.instances = {
-    //tabs: window.developerRedirect.tabs(),
-    //console: window.developerRedirect.console(),
-};
-/*
-
-let d = document.createElement('div');
-d.setAttribute('id', 'TestTAB');
-d.innerText = 'OMG I WORK';
-
-window.developerRedirect.instances.tabs.addTab('test', d);
-
-*/
-
-
-
-
-
 
 
