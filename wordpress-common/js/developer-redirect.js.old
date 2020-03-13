@@ -592,10 +592,10 @@ window.developerRedirect.vsQuery = (function () {
         this.initialize = function() {
             that.pageSource = vs( '<div>', { id: 'developer-redirect-page-source' } );
             that.htmlWrap   = vs('<pre>').appendTo(that.pageSource);
-            that.refreshButton = vs( '<input>', { type: 'button', id: 'developer-redirect-page-source-button', value: 'Refresh' } )
+            /*that.refreshButton = vs( '<input>', { type: 'button', id: 'developer-redirect-page-source-button', value: 'Refresh' } )
                 .appendTo(that.pageSource)
-                .on('click',this.render);
-            
+                //.on('click',this.render);
+            */
             
             
             dev.instances.tabs.addTab( 'Page Source', that.pageSource )
